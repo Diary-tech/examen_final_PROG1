@@ -8,6 +8,51 @@ if (!fs.existsSync(dist)) {
   fs.mkdirSync(dist);
 }
 
+/*
+Fonction generatesStatsPage : 
+1 - Analyse :
+Entrée : tableau d’articles
+Sortie : Page HTML contenant les statistiques du blog
+
+2 - Conception : 
+Utiliser une fonction generateStatsPage qui prend en paramètre un tableau d’articles. Calculer le nombre
+d’articles avec la longueur du tableau. Utiliser une boucle pour additionner le nombre 
+total de mots avec countWords. Utiliser une structure conditionnelle pour calculer la moyenne si le nombre d’articles > 0.
+Utiliser un dictionnaire pour compter le nombre d’articles par auteur.
+Parcourir ce dictionnaire pour trouver l’auteur ayant le maximum d’articles. Construire le contenu HTML 
+avec les statistiques. Retourner le résultat avec layout.
+
+3 - Syntaxe : 
+Début
+  Fonction generateStatsPage (data)
+    nbrArticles = longueur(data)
+        totalWords = 0
+        Pour chaque article dans data
+            totalWords = totalWords + countWords(article.content)
+        FinPour
+        Si nbrArticles > 0 Alors
+            avgWords = arrondi(totalWords / nbrArticles)
+        Sinon
+            avgWords = 0
+        FinSi
+        Déclarer authorCount comme dictionnaire
+        Pour chaque article dans data
+            authorCount[article.author] = authorCount[article.author] + 1 (ou 1 si inexistant)
+        FinPour
+        topAuthor = "Aucun"
+        maxCount = 0
+        Pour chaque auteur dans authorCount
+            Si authorCount[auteur] > maxCount Alors
+                maxCount = authorCount[auteur]
+                topAuthor = auteur
+            FinSi
+        FinPour
+        Construire body (HTML)
+        Retourner layout("Statistiques", body)
+  FinFonction
+Fin
+*/
+
 function generateStatsPage(data) {
   const nbrArticles = data.length;
 
@@ -44,6 +89,35 @@ function generateStatsPage(data) {
   return layout("Statistiques", body);
 }
 
+/*
+Fonction generatesArchivesPages
+1 - Analyse :
+Entrée : tableau d’articles
+Sortie : Page HTML contenant la liste des articles avec liens
+
+2 - Conception : 
+Utiliser une fonction generateStatsPage qui prend un tableau d’articles. Parcourir chaque article 
+pour créer un élément HTML. Utiliser slugify pour le lien et escapeHTML pour sécuriser le texte.
+Utiliser countWords pour afficher le nombre de mots. Concaténer tous les éléments dans une liste.
+Retourner la page avec layout.
+
+3 - Syntaxe : 
+Début
+  Fonction generateArchivesPage (data)
+        list = ""
+        Pour chaque article dans data
+            element = créer HTML avec :
+                article.date
+                slugify(article.title)
+                escapeHTML(article.title)
+                countWords(article.content)
+            list = list + element
+        FinPour
+        body = "<h1>Tous les articles</h1>" + list
+        Retourner layout("Archives", body)
+    FinFonction
+Fin
+*/
 
 function generateArchivesPage(data) {
   const list = data.map(article => `
@@ -57,6 +131,46 @@ function generateArchivesPage(data) {
   return layout("Archives", `<h1>Tous les articles</h1><ul>${list}</ul>`);
 }
 
+/*
+Fonction build : 
+1 - Analyse :
+Entrée : aucune (utilise les données globales)
+Sortie : Fichiers HTML générés dans le dossier dist
+
+2 - Conception : 
+Utiliser une fonction. Construire la page d’accueil avec les articles (titre, résumé, lien).
+Écrire le fichier index.html. Générer et écrire la page archives. Générer et écrire 
+la page statistiques. Créer la page à propos. Parcourir les articles pour générer une page 
+individuelle pour chacun. Sauvegarder chaque fichier avec fs.writeFileSync.
+Afficher un message de succès.
+
+3 - Syntaxe : 
+Début
+  Fonction build ()
+        indexBody = "<h1>Dernières publications</h1>"
+        Pour chaque article dans articles
+            Ajouter au indexBody :
+                titre
+                contenu tronqué (truncate)
+                lien (slugify)
+        FinPour
+        Écrire fichier "index.html" avec layout("Accueil", indexBody)
+        Écrire fichier "archives.html" avec generateArchivesPage(articles)
+        Écrire fichier "stats.html" avec generateStatsPage(articles)
+        Écrire fichier "a-propos.html" avec contenu fixe
+        Pour chaque article dans articles
+            content = construire HTML avec :
+                image
+                titre sécurisé
+                auteur
+                date
+                contenu
+            Écrire fichier avec nom slugify(article.title)
+        FinPour
+        Afficher "Site généré avec succès"
+    FinFonction
+Fin
+*/
 
 export const build = () => {
   

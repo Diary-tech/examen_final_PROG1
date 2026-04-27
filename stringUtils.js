@@ -27,8 +27,8 @@ Fin
 */
 
 export function slugify(titre) {
-    let resultat = titre.toLowerCase();    
-    resultat = resultat.trim();             
+    let resultat = titre.toLowerCase();
+    resultat = resultat.trim();
     resultat = resultat.replace("!", "");
     resultat = resultat.replace("?", "");
     resultat = resultat.replace(".", "");
@@ -38,8 +38,8 @@ export function slugify(titre) {
     resultat = resultat.replace("'", "");
     resultat = resultat.replace('"', "");
     resultat = resultat.replace(" ", "-");
-    resultat = resultat.replace("  ", "-");   
-    
+    resultat = resultat.replace("  ", "-");
+
     if (resultat.startsWith("-")) {
         resultat = resultat.substring(1);
     }
@@ -94,11 +94,57 @@ export function truncate(texte, longueurMax) {
     return texteCoupe + "...";
 }
 
+/*
+Fonction countWords : 
+1 - Analyse du problème : 
+Entrée : chaîne de caractères
+Sortie : nombres de mots dans la chaîne de caractères
+
+2 - Conception : 
+Utiliser une fonction countWords qui prend en paramètre chaine de caractère.  
+Supprimer les espaces inutiles au début et à la fin de la chaîne de
+caractères puis le stocker dans une variable "texte". Couper la chaine à chaque espace puis 
+le stocker dans une variable "mots".
+
+3 - Syntaxe : 
+Début
+    Fonction countWords (str) 
+        Déclarer texte : chaîne de caractère
+        Déclarer mots : tableau
+        Retourner nombre d'éléments dans mots
+    FinFonction
+Fin
+*/
+
 export function countWords(str) {
-    let texte = str.trim();           
-    let mots = texte.split(" ");      
+    let texte = str.trim();
+    let mots = texte.split(" ");
     return mots.length;
 }
+
+/*
+Fonction escapeHTML : 
+1 - Analyse du problème : 
+Entrée : chaîne de caractères
+Sortie : chaîne de caractères où tous les caractères spéciaux HTML ont été remplacés par leurs entités correspondantes
+
+2 - Conception : 
+Utiliser une fonction escapeHTML qui prend en paramètre chaine de caractère à sécuriser.  
+Remplacer chaque caractères non conformes par leurs entités HTML.
+
+3 - Syntaxe : 
+Début
+    Fonction escapeHTML (str) 
+        Déclarer resultat = str
+        Remplacer les & dans resultat par  &amp
+        Remplacer les < dans resultat par &lt
+        Remplacer les > dans resultat par &gt
+        Remplacer les " dans resultat par &quot
+        Remplacer les ' dans resultat par &#39
+        Retourner resultat
+    FinFonction
+Fin
+*/
 
 export function escapeHTML(str) {
     let resultat = str;
