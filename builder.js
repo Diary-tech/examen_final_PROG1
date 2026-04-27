@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import { articles } from './data.js';
 import { layout } from './layout.js';
@@ -8,7 +7,6 @@ const dist = './dist';
 if (!fs.existsSync(dist)) {
   fs.mkdirSync(dist);
 }
-
 
 function generateStatsPage(data) {
   const nbrArticles = data.length;
