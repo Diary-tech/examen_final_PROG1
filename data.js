@@ -1,3 +1,21 @@
+/*
+1 - Analyse du problème : 
+Entrée : Fichier Docs Data
+Sortie : Variable Article contenant chaque article sur le blog 
+
+2 - Conception : 
+Mettre le contenu du fichier Docs Data dans une variable appellé "articles" ayant comme
+structure de base de données un tableau d'objet. Exporter la variable pour qu'elle soit réutilisable dans
+autres fichiers.
+
+3 - Syntaxe : 
+Début 
+  Déclarer articles : tableau
+  Exporter articles
+Fin
+*/
+
+
 export const articles = [
   {
     title: "Hello World",

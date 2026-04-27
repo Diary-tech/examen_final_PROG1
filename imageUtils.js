@@ -32,7 +32,7 @@ Fonction decodeBase64ToImage(base64String, nexPath)
     Déclarer imageBuffer
     ImageBuffer = buffer de base64String
     Ecrire l'image vers newPath à partir de imageBuffer
-FINEnc
+FIN
 
 */
 
