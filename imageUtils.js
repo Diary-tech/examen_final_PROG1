@@ -1,22 +1,47 @@
+/* Conception: Fonction encodeImageToBase64 qui prend une image en paramètre et la transforme en chaîne Base64  en créant un buffer, puis retourne ce buffer en tant que string base64
+
+Pseudo-code:
+DEBUT
+
+Importer fs
+Déclarer imagePath: string
+
+Fonction encodeImageToBase64(imagePath) 
+    Déclarer imageBuffer = Lecture de l'image à imagePath
+    Retourner imageBuffer sous base64
+FIN
+
+*/
+
 import fs from 'fs';
 
-/**
- * Encode une image en Base64
- * @param {string} imagePath - Chemin vers l'image
- * @returns {string} Chaîne Base64
- */
-export function encodeImageToBase64(imagePath) {
-  const bitmap = fs.readFileSync(imagePath);
-  return bitmap.toString('base64');
+function encodeImageToBase64(imagePath) {
+    const imageBuffer = fs.readFileSync(imagePath);
+    return imageBuffer.toString('base64');
 }
 
-/**
- * Décode une chaîne Base64 et sauvegarde l'image
- * @param {string} base64String - Chaîne Base64 (sans le préfixe data:...)
- * @param {string} outputPath - Chemin de sortie de l'image
- */
-export function decodeBase64ToImage(base64String, outputPath) {
-  const buffer = Buffer.from(base64String, 'base64');
-  fs.writeFileSync(outputPath, buffer);
-  console.log(`Image sauvegardée : ${outputPath}`);
+/* Conception: Fonction decodeBase64ToImage qui récupère la chaîne base64 et recrée une copie de l'image à oartir d'un buffer
+
+Pseudo-code:
+DEBUT
+
+Déclarer base64String: string
+Déclarer newPath: string
+
+Fonction decodeBase64ToImage(base64String, nexPath)
+    Déclarer imageBuffer
+    ImageBuffer = buffer de base64String
+    Ecrire l'image vers newPath à partir de imageBuffer
+FINEnc
+
+*/
+
+function decodeBase64ToImage(base64String, newPath) {
+    const imageBuffer = Buffer.from(base64String, 'base64');
+    fs.writeFileSync(newPath, imageBuffer);
 }
+
+export {
+    encodeImageToBase64,
+    decodeBase64ToImage
+};
